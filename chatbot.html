@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sai Vidyapeeth AI Helpdesk | By Purnachandra Manik</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #cbd5e1, #e2e8f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 12px;
+    }
+    .chat-container {
+      width: 100%;
+      max-width: 460px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 88vh;
+      border: 1px solid #cbd5e1;
+    }
+    .chat-header {
+      background: linear-gradient(135deg, #0f172a, #1e40af);
+      color: #ffffff;
+      padding: 16px;
+      text-align: center;
+      border-bottom: 3px solid #f59e0b;
+    }
+    .college-badge {
+      background: rgba(255, 255, 255, 0.15);
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+      color: #fde68a;
+      font-weight: 600;
+    }
+    .chat-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .credit-banner {
+      background: #eff6ff;
+      color: #1e3a8a;
+      text-align: center;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-bottom: 1px solid #dbeafe;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .message {
+      max-width: 84%;
+      padding: 11px 15px;
+      border-radius: 14px;
+      font-size: 0.94rem;
+      line-height: 1.45;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .bot-msg {
+      background: #ffffff;
+      color: #1e293b;
+      align-self: flex-start;
+      border: 1px solid #e2e8f0;
+      border-bottom-left-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+    .user-msg {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+    .typing {
+      font-style: italic;
+      color: #64748b;
+      font-size: 0.85rem;
+      align-self: flex-start;
+      display: none;
+    }
+    .quick-btns {
+      display: flex;
+      gap: 7px;
+      padding: 9px 12px;
+      overflow-x: auto;
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
+    }
+    .quick-btns button {
+      background: #ffffff;
+      border: 1px solid #2563eb;
+      color: #1e40af;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .quick-btns button:active {
+      background: #2563eb;
+      color: #ffffff;
+    }
+    .input-area {
+      display: flex;
+      padding: 10px;
+      background: #ffffff;
+      border-top: 1px solid #cbd5e1;
+    }
+    .input-area input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      outline: none;
+      font-size: 0.95rem;
+    }
+    .input-area button {
+      background: #1e40af;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      margin-left: 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .footer-credit {
+      background: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 6px;
+      font-size: 0.72rem;
+    }
+    .footer-credit span {
+      color: #fde68a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="college-badge">SAI VIDYAPEETH, PURI (ODISHA)</div>
+      <h2>🤖 Smart College AI Helpdesk</h2>
+    </div>
+
+    <div class="credit-banner">
+      ✨ Project by: sambit Kumar manik (1st Year, Diploma in AI & ML)
+    </div>
+
+    <div class="chat-box" id="chatBox">
+      <div class="message bot-msg">
+        Namaste & Welcome to <b>Sai Vidyapeeth, Puri</b>! 🙏<br><br>
+        Main aapka Smart AI Assistant hoon. Aap mujhse <b>College Name, Address, Principal Sir, Branches, Timing, Contact, ya Scholarship</b> ke baare mein kuch bhi pooch sakte hain!
+      </div>
+      <div class="typing" id="typingIndicator">AI Assistant is typing...</div>
+    </div>
+
+    <!-- Quick Question Buttons -->
+    <div class="quick-btns">
+      <button onclick="askQuick('Principal Name')">Principal Sir</button>
+      <button onclick="askQuick('College Address')">Address</button>
+      <button onclick="askQuick('Branches')">Branches</button>
+      <button onclick="askQuick('Contact')">Contact</button>
+      <button onclick="askQuick('Scholarship')">Scholarship</button>
+      <button onclick="askQuick('Developer')">Developer</button>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Apna sawal yahan likhein..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="footer-credit">
+      Designed & Developed by <span>sambit Kumar manik</span> | Dept. of AI & ML
+    </div>
+  </div>
+
+  <script>
+    const collegeKnowledge = {
+      "principal": "<b>Respected Principal Sir:</b><br>Hamare Sai Vidyapeeth ke Principal Sir ka naam <b>Er. Ashis Kumar Dash</b> (M.Tech in CSE) hai. Unka office Administrative Block mein sthit hai.",
+      "address": "<b>📍 College Address:</b><br>Sai Vidyapeeth, At - Phula Alasa, PO - Mula Alasa, Via/PS - Satyabadi (near Sakhigopal), Dist. - Puri, Odisha - 752014.",
+      "location": "<b>📍 College Location:</b><br>Sai Vidyapeeth, Phula Alasa, PO - Mula Alasa, PS - Satyabadi, Puri, Odisha - 752014.",
+      "name": "<b>🏫 College Name:</b><br>Hamare college ka naam <b>Sai Vidyapeeth</b> hai, jo AICTE (New Delhi) se approved aur SCTE&VT (Odisha) se affiliated Diploma Engineering College hai.",
+      "college": "<b>🏫 About Sai Vidyapeeth:</b><br>Sai Vidyapeeth (Sakhigopal, Puri, Odisha) ek premier Diploma Engineering College hai jahan modern classrooms, AC labs, aur practical workshops ki suvidha hai.",
+      "branch": "<b>📚 Available Diploma Branches (60 Seats Each):</b><br>1. Artificial Intelligence & Machine Learning (AI & ML)<br>2. Electrical Engineering (EE)<br>3. Electrical & Electronics Engineering (EEE)<br>4. Mechanical Engineering (ME)",
+      "ai": "<b>🤖 Artificial Intelligence & Machine Learning (AI & ML):</b><br>Yeh Sai Vidyapeeth ka sabse modern Diploma branch hai (60 seats), jisme Python, AI fundamentals, aur practical projects sikhaye jaate hain.",
+      "timing": "<b>⏰ College Timing:</b><br>Sai Vidyapeeth ka samay Somwar se Shaniwar (Monday to Saturday) subah <b>9:00 AM se shaam 4:00 PM</b> tak hai.",
+      "contact": "<b>📞 Contact & Website:</b><br>Mobile: +91 94384 77565<br>Landline: 06752-273238<br>Website: www.saividyapeeth.com",
+      "phone": "<b>📞 College Phone Number:</b><br>Aap +91 94384 77565 ya 06752-273238 par sampark kar sakte hain.",
+      "admission": "<b>🎓 Admission Eligibility:</b><br>10th Pass (HSC) ya +2 pass students Diploma Engineering ke liye apply kar sakte hain. SAMS Odisha portal ya college campus mein direct admission ki jankari lein.",
+      "scholarship": "<b>💰 Scholarships Available:</b><br>Odisha ke students ke liye Post-Matric Scholarship (SC/ST/OBC), Krushi Vidya Nidhi Yojana, aur anya Govt. of Odisha scholarships uplabdh hain.",
+      "developer": "<b>👨‍💻 About the Creator:</b><br>Is Smart AI Helpdesk Chatbot ko <b>Purnachandra Manik</b> (1st Year Student, Diploma in Artificial Intelligence & Machine Learning, Sai Vidyapeeth Puri) ne design aur develop kiya hai!",
+      "purnachandra": "<b>Purnachandra Manik</b> Sai Vidyapeeth, Puri ke 1st Year AI & ML Diploma student hain, jinhone yeh Smart College Helpdesk banaya hai.",
+      "hi": "Namaste! Sai Vidyapeeth, Puri ke AI Helpdesk mein aapka swagat hai. Bataiye main kya madad karun?",
+      "hello": "Hello! Aap college ka naam, address, Principal Sir, ya courses ke baare mein kuch bhi pooch sakte hain."
+    };
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (text === "") return;
+
+      addMessage(text, "user-msg");
+      input.value = "";
+      showTypingAndReply(text.toLowerCase());
+    }
+
+    function askQuick(topic) {
+      addMessage(topic, "user-msg");
+      showTypingAndReply(topic.toLowerCase());
+    }
+
+    function showTypingAndReply(query) {
+      const typing = document.getElementById("typingIndicator");
+      const chatBox = document.getElementById("chatBox");
+      typing.style.display = "block";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      setTimeout(() => {
+        typing.style.display = "none";
+        const reply = getBotReply(query);
+        addMessage(reply, "bot-msg");
+      }, 500);
+    }
+
+    function addMessage(text, className) {
+      const chatBox = document.getElementById("chatBox");
+      const typing = document.getElementById("typingIndicator");
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "message " + className;
+      msgDiv.innerHTML = text;
+      chatBox.insertBefore(msgDiv, typing);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function getBotReply(userText) {
+      for (let key in collegeKnowledge) {
+        if (userText.includes(key)) {
+          return collegeKnowledge[key];
+        }
+      }
