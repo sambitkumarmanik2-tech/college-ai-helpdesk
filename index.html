@@ -95,7 +95,7 @@
     if (!window.speechSynthesis) { if (done) done(); return; }
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(txt);
-    u.lang = "or-IN";
+    u.lang = "en-IN";
     u.rate = 0.95;
     u.onend = function() { if (done) done(); };
     u.onerror = function() { if (done) done(); };
@@ -118,8 +118,9 @@
       document.getElementById("callStatus").innerText = "Mic sirf Chrome browser mein chalega";
       return;
     }
+    try { if (rec) rec.stop(); } catch(e) {}
     rec = new SR();
-    rec.lang = "or-IN";
+    rec.lang = "en-IN";
     rec.start();
     document.getElementById("callStatus").innerText = "Listening... Ebe kuhantu";
     rec.onresult = function(ev) {
@@ -134,14 +135,14 @@
         });
       }, 250);
     };
-    rec.onerror = function() {
-      document.getElementById("callStatus").innerText = "Tap Mic and speak again";
+    rec.onerror = function(err) {
+      document.getElementById("callStatus").innerText = "Error: " + err.error + " (Tap Mic again)";
     };
   }
 
   function closeCall() {
     if (window.speechSynthesis) window.speechSynthesis.cancel();
-    if (rec) rec.stop();
+    try { if (rec) rec.stop(); } catch(e) {}
     var cb = document.getElementById("callBox");
     if (cb) cb.style.display = "none";
   }
@@ -172,5 +173,3 @@
   </div>
 
   <div class="inp">
-    <input type="text" id="msgInput" placeholder="Apna sawal likhein...">
-    <button type="button" onclick="sendText()">Send</button>
