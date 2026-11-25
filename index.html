@@ -1,77 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sai Vidyapeeth AI Helpdesk | Sambit Kumar Manik</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-    body { background: #e2e8f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
-    .box { width: 100%; max-width: 450px; background: #fff; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); overflow: hidden; display: flex; flex-direction: column; height: 88vh; position: relative; }
-    .head { background: #1e3a8a; color: #fff; padding: 14px; text-align: center; border-bottom: 3px solid #f59e0b; }
-    .badge { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 10px; font-size: 11px; color: #fde68a; display: inline-block; margin-bottom: 4px; }
-    .call-btn { background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-top: 8px; cursor: pointer; }
-    .credit { background: #eff6ff; color: #1e3a8a; text-align: center; padding: 5px; font-size: 11.5px; font-weight: bold; border-bottom: 1px solid #dbeafe; }
-    .chat { flex: 1; padding: 14px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
-    .msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.4; }
-    .bot { background: #fff; color: #1e293b; align-self: flex-start; border: 1px solid #cbd5e1; }
-    .user { background: #2563eb; color: #fff; align-self: flex-end; }
-    .btns { display: flex; gap: 6px; padding: 8px; overflow-x: auto; background: #f1f5f9; border-top: 1px solid #e2e8f0; }
-    .btns button { background: #fff; border: 1px solid #2563eb; color: #1e40af; padding: 6px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; white-space: nowrap; cursor: pointer; }
-    .inp { display: flex; padding: 10px; background: #fff; border-top: 1px solid #cbd5e1; }
-    .inp input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; font-size: 14px; }
-    .inp button { background: #1e40af; color: #fff; border: none; padding: 10px 16px; margin-left: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    .foot { background: #0f172a; color: #94a3b8; text-align: center; padding: 6px; font-size: 11px; }
-    .foot span { color: #fde68a; font-weight: bold; }
-    .call-ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; color: #fff; display: none; flex-direction: column; justify-content: space-between; align-items: center; padding: 40px 20px; text-align: center; z-index: 20; }
-    .mic { background: #2563eb; color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 26px; cursor: pointer; }
-    .end { background: #dc2626; color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 24px; cursor: pointer; }
-  </style>
-</head>
-<body>
-
-<div class="box">
-  <div class="head">
-    <div class="badge">SAI VIDYAPEETH, PURI (ODISHA)</div>
-    <h3>Smart College AI Helpdesk</h3>
-    <button type="button" class="call-btn" onclick="openCall()">Odia Voice Call with AI</button>
-  </div>
-  <div class="credit">Project by: Sambit Kumar Manik (1st Year, AI & ML)</div>
-
-  <div class="chat" id="chatBox">
-    <div class="msg bot">Namaskar & Welcome to <b>Sai Vidyapeeth, Puri</b>! Neeche button dabayein, type karein, ya upar Voice Call par baat karein.</div>
-  </div>
-
-  <div class="btns">
-    <button type="button" onclick="quickAsk('Principal')">Principal Sir</button>
-    <button type="button" onclick="quickAsk('Fees')">Fees & Hostel</button>
-    <button type="button" onclick="quickAsk('Address')">Address</button>
-    <button type="button" onclick="quickAsk('Branches')">Branches</button>
-    <button type="button" onclick="quickAsk('Scholarship')">Scholarship</button>
-    <button type="button" onclick="quickAsk('Contact')">Contact</button>
-    <button type="button" onclick="quickAsk('Developer')">Developer</button>
-  </div>
-
-  <div class="inp">
-    <input type="text" id="msgInput" placeholder="Apna sawal likhein...">
-    <button type="button" onclick="sendText()">Send</button>
-  </div>
-
-  <div class="foot">Designed & Developed by <span>Sambit Kumar Manik</span> | Dept. of AI & ML</div>
-
-  <div class="call-ui" id="callBox">
-    <div>
-      <h2>Sai Vidyapeeth Odia AI</h2>
-      <p id="callStatus" style="color:#93c5fd; margin-top:10px;">Connected...</p>
-    </div>
-    <div id="voiceText" style="background:rgba(255,255,255,0.1); padding:15px; border-radius:12px; color:#fde68a; width:90%;">Namaskar! Sai Vidyapeeth AI Helpdesk ku swagata.</div>
-    <div style="display:flex; gap:20px;">
-      <button type="button" class="mic" onclick="startMic()">Mic</button>
-      <button type="button" class="end" onclick="closeCall()">End</button>
-    </div>
-  </div>
-</div>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Vidyapeeth AI Helpdesk | Sambit Kumar Manik</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+  body { background: #e2e8f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
+  .box { width: 100%; max-width: 450px; background: #fff; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); overflow: hidden; display: flex; flex-direction: column; height: 88vh; position: relative; }
+  .head { background: #1e3a8a; color: #fff; padding: 14px; text-align: center; border-bottom: 3px solid #f59e0b; }
+  .badge { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 10px; font-size: 11px; color: #fde68a; display: inline-block; margin-bottom: 4px; }
+  .call-btn { background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-top: 8px; cursor: pointer; }
+  .credit { background: #eff6ff; color: #1e3a8a; text-align: center; padding: 5px; font-size: 11.5px; font-weight: bold; border-bottom: 1px solid #dbeafe; }
+  .chat { flex: 1; padding: 14px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
+  .msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.4; }
+  .bot { background: #fff; color: #1e293b; align-self: flex-start; border: 1px solid #cbd5e1; }
+  .user { background: #2563eb; color: #fff; align-self: flex-end; }
+  .btns { display: flex; gap: 6px; padding: 8px; overflow-x: auto; background: #f1f5f9; border-top: 1px solid #e2e8f0; }
+  .btns button { background: #fff; border: 1px solid #2563eb; color: #1e40af; padding: 6px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; white-space: nowrap; cursor: pointer; }
+  .inp { display: flex; padding: 10px; background: #fff; border-top: 1px solid #cbd5e1; }
+  .inp input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; font-size: 14px; }
+  .inp button { background: #1e40af; color: #fff; border: none; padding: 10px 16px; margin-left: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .foot { background: #0f172a; color: #94a3b8; text-align: center; padding: 6px; font-size: 11px; }
+  .foot span { color: #fde68a; font-weight: bold; }
+  .call-ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; color: #fff; display: none; flex-direction: column; justify-content: space-between; align-items: center; padding: 35px 20px; text-align: center; z-index: 20; }
+  .mic { background: #2563eb; color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; }
+  .end { background: #dc2626; color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; }
+</style>
 <script>
   var db = {
     "principal": "<b>Respected Principal Sir:</b><br>Hamare Sai Vidyapeeth ke Principal Sir ka naam <b>Er. Ashis Kumar Dash</b> (M.Tech in CSE) hai.",
@@ -126,21 +81,18 @@
     pushMsg(txt, "user");
     inp.value = "";
     var ans = getReply(txt, false);
-    setTimeout(function() { pushMsg(ans, "bot"); }, 250);
+    setTimeout(function() { pushMsg(ans, "bot"); }, 200);
   }
 
   function quickAsk(topic) {
     pushMsg(topic, "user");
     var ans = getReply(topic, false);
-    setTimeout(function() { pushMsg(ans, "bot"); }, 250);
+    setTimeout(function() { pushMsg(ans, "bot"); }, 200);
   }
-
-  document.getElementById("msgInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") sendText();
-  });
 
   var rec;
   function speakNow(txt, done) {
+    if (!window.speechSynthesis) { if (done) done(); return; }
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(txt);
     u.lang = "or-IN";
@@ -151,7 +103,9 @@
   }
 
   function openCall() {
-    document.getElementById("callBox").style.display = "flex";
+    var cb = document.getElementById("callBox");
+    if (!cb) return;
+    cb.style.display = "flex";
     var intro = "Namaskar! Sai Vidyapeeth AI Helpdesk ku swagata. Apana Principal, Fees, Hostel, ki Address bisayare pachari paribe.";
     document.getElementById("voiceText").innerText = intro;
     document.getElementById("callStatus").innerText = "AI Speaking...";
@@ -161,7 +115,7 @@
   function startMic() {
     var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
-      document.getElementById("callStatus").innerText = "Use Chrome for Voice";
+      document.getElementById("callStatus").innerText = "Mic sirf Chrome browser mein chalega";
       return;
     }
     rec = new SR();
@@ -171,3 +125,52 @@
     rec.onresult = function(ev) {
       var said = ev.results[0][0].transcript;
       document.getElementById("voiceText").innerText = "Apana: " + said;
+      var reply = getReply(said, true);
+      setTimeout(function() {
+        document.getElementById("voiceText").innerText = "AI: " + reply;
+        document.getElementById("callStatus").innerText = "AI Speaking...";
+        speakNow(reply, function() {
+          document.getElementById("callStatus").innerText = "Tap Mic to speak again";
+        });
+      }, 250);
+    };
+    rec.onerror = function() {
+      document.getElementById("callStatus").innerText = "Tap Mic and speak again";
+    };
+  }
+
+  function closeCall() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (rec) rec.stop();
+    var cb = document.getElementById("callBox");
+    if (cb) cb.style.display = "none";
+  }
+</script>
+</head>
+<body>
+
+<div class="box">
+  <div class="head">
+    <div class="badge">SAI VIDYAPEETH, PURI (ODISHA)</div>
+    <h3>Smart College AI Helpdesk</h3>
+    <button type="button" class="call-btn" onclick="openCall()">Odia Voice Call with AI</button>
+  </div>
+  <div class="credit">Project by: Sambit Kumar Manik (1st Year, AI & ML)</div>
+
+  <div class="chat" id="chatBox">
+    <div class="msg bot">Namaskar & Welcome to <b>Sai Vidyapeeth, Puri</b>! Neeche button dabayein, type karein, ya upar Voice Call par baat karein.</div>
+  </div>
+
+  <div class="btns">
+    <button type="button" onclick="quickAsk('Principal')">Principal Sir</button>
+    <button type="button" onclick="quickAsk('Fees')">Fees & Hostel</button>
+    <button type="button" onclick="quickAsk('Address')">Address</button>
+    <button type="button" onclick="quickAsk('Branches')">Branches</button>
+    <button type="button" onclick="quickAsk('Scholarship')">Scholarship</button>
+    <button type="button" onclick="quickAsk('Contact')">Contact</button>
+    <button type="button" onclick="quickAsk('Developer')">Developer</button>
+  </div>
+
+  <div class="inp">
+    <input type="text" id="msgInput" placeholder="Apna sawal likhein...">
+    <button type="button" onclick="sendText()">Send</button>
