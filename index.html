@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sai Vidyapeeth AI Helpdesk | Sambit Kumar Manik</title>
+  <title>Sai Vidyapeeth AI Voice & Chat Helpdesk | Sambit Kumar Manik</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: #e2e8f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
-    .box { width: 100%; max-width: 450px; background: #fff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); overflow: hidden; display: flex; flex-direction: column; height: 88vh; }
-    .head { background: #1e3a8a; color: #fff; padding: 15px; text-align: center; border-bottom: 3px solid #f59e0b; }
-    .badge { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 10px; font-size: 12px; color: #fde68a; display: inline-block; margin-bottom: 5px; }
-    .credit { background: #eff6ff; color: #1e3a8a; text-align: center; padding: 6px; font-size: 12px; font-weight: bold; border-bottom: 1px solid #dbeafe; }
-    .chat { flex: 1; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
+    .box { width: 100%; max-width: 450px; background: #fff; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); overflow: hidden; display: flex; flex-direction: column; height: 88vh; position: relative; }
+    .head { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #fff; padding: 14px; text-align: center; border-bottom: 3px solid #f59e0b; }
+    .badge { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 10px; font-size: 11px; color: #fde68a; display: inline-block; margin-bottom: 4px; }
+    .call-top-btn { background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-top: 8px; cursor: pointer; box-shadow: 0 3px 10px rgba(22,163,74,0.4); }
+    .credit { background: #eff6ff; color: #1e3a8a; text-align: center; padding: 5px; font-size: 11.5px; font-weight: bold; border-bottom: 1px solid #dbeafe; }
+    .chat { flex: 1; padding: 14px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
     .msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.4; }
     .bot { background: #fff; color: #1e293b; align-self: flex-start; border: 1px solid #cbd5e1; }
     .user { background: #2563eb; color: #fff; align-self: flex-end; }
@@ -22,6 +23,15 @@
     .inp button { background: #1e40af; color: #fff; border: none; padding: 10px 16px; margin-left: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     .foot { background: #0f172a; color: #94a3b8; text-align: center; padding: 6px; font-size: 11px; }
     .foot span { color: #fde68a; font-weight: bold; }
+
+    /* Live Voice Call Overlay Screen */
+    .call-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(160deg, #0f172a, #1e3a8a); color: #fff; display: none; flex-direction: column; justify-content: space-between; align-items: center; padding: 40px 20px; text-align: center; z-index: 10; }
+    .avatar { width: 95px; height: 95px; background: #2563eb; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 42px; margin: 0 auto 15px; box-shadow: 0 0 0 10px rgba(37,99,235,0.25); }
+    .status-text { color: #93c5fd; font-size: 15px; margin-top: 8px; min-height: 24px; }
+    .spoken-text { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-size: 14px; width: 90%; min-height: 60px; color: #fde68a; line-height: 1.4; }
+    .call-controls { display: flex; gap: 20px; }
+    .mic-btn { background: #2563eb; color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 26px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+    .end-btn { background: #dc2626; color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; font-size: 24px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
@@ -30,19 +40,21 @@
   <div class="head">
     <div class="badge">SAI VIDYAPEETH, PURI (ODISHA)</div>
     <h3>🤖 Smart College AI Helpdesk</h3>
+    <button type="button" class="call-top-btn" onclick="startCall()">📞 Odia Voice Call with AI</button>
   </div>
   <div class="credit">✨ Project by: Sambit Kumar Manik (1st Year, AI & ML)</div>
 
   <div class="chat" id="chatBox">
-    <div class="msg bot">Namaste & Welcome to <b>Sai Vidyapeeth, Puri</b>! 🙏<br><br>Main aapka AI Assistant hoon. Neeche button dabayein ya <b>Principal Sir, Address, Branches, Contact, Scholarship</b> ke baare mein poochhein!</div>
+    <div class="msg bot">Namaskar & Welcome to <b>Sai Vidyapeeth, Puri</b>! 🙏<br><br>Aap chat kar sakte hain ya upar <b>"📞 Odia Voice Call with AI"</b> dabakar Odia mein baat kar sakte hain!</div>
   </div>
 
   <div class="btns">
     <button type="button" onclick="replyNow('Principal Sir')">Principal Sir</button>
+    <button type="button" onclick="replyNow('Fees')">Fees & Hostel</button>
     <button type="button" onclick="replyNow('Address')">Address</button>
     <button type="button" onclick="replyNow('Branches')">Branches</button>
-    <button type="button" onclick="replyNow('Contact')">Contact</button>
     <button type="button" onclick="replyNow('Scholarship')">Scholarship</button>
+    <button type="button" onclick="replyNow('Contact')">Contact</button>
     <button type="button" onclick="replyNow('Developer')">Developer</button>
   </div>
 
@@ -52,26 +64,76 @@
   </div>
 
   <div class="foot">Designed & Developed by <span>Sambit Kumar Manik</span> | Dept. of AI & ML</div>
+
+  <!-- Odia Voice Call Screen -->
+  <div class="call-screen" id="callScreen">
+    <div>
+      <div class="avatar">🤖</div>
+      <h2>Sai Vidyapeeth AI Agent</h2>
+      <div class="status-text" id="callStatus">Connecting Odia call...</div>
+    </div>
+
+    <div class="spoken-text" id="liveTranscript">ନମସ୍କାର! ସାଇ ବିଦ୍ୟାପୀଠ AI ହେଲ୍ପଡେସ୍କକୁ ଆପଣଙ୍କୁ ସ୍ୱାଗତ।</div>
+
+    <div class="call-controls">
+      <button type="button" class="mic-btn" onclick="listenUser()" title="Speak Odia">🎤</button>
+      <button type="button" class="end-btn" onclick="endCall()" title="End Call">📵</button>
+    </div>
+  </div>
 </div>
 
 <script>
   var data = {
-    "principal": "<b>Respected Principal Sir:</b><br>Hamare Sai Vidyapeeth ke Principal Sir ka naam <b>Er. Ashis Kumar Dash</b> (M.Tech in CSE) hai.",
-    "address": "<b>📍 College Address:</b><br>Sai Vidyapeeth, At - Phula Alasa, PO - Mula Alasa, Via/PS - Satyabadi (near Sakhigopal), Dist. - Puri, Odisha - 752014.",
-    "location": "<b>📍 College Location:</b><br>Sai Vidyapeeth, Phula Alasa, Satyabadi, Puri, Odisha - 752014.",
-    "name": "<b>🏫 College Name:</b><br>Hamare college ka naam <b>Sai Vidyapeeth</b> hai (AICTE Approved & SCTE&VT Odisha Affiliated).",
-    "college": "<b>🏫 Sai Vidyapeeth:</b><br>Sakhigopal, Puri (Odisha) ka premier Diploma Engineering College.",
-    "branch": "<b>📚 Available Branches:</b><br>1. AI & Machine Learning (AI & ML)<br>2. Electrical Engineering (EE)<br>3. Electrical & Electronics (EEE)<br>4. Mechanical Engineering (ME)",
-    "ai": "<b>🤖 AI & ML Branch:</b><br>Yeh Sai Vidyapeeth ka modern Diploma branch hai (60 seats), jisme Python aur AI sikhaya jaata hai.",
-    "timing": "<b>⏰ College Timing:</b><br>Monday to Saturday, subah <b>9:00 AM se shaam 4:00 PM</b> tak.",
-    "contact": "<b>📞 Contact Details:</b><br>Phone: +91 94384 77565 / 06752-273238<br>Website: ://saividyapeeth.com",
-    "phone": "<b>📞 Phone:</b> +91 94384 77565 / 06752-273238",
-    "admission": "<b>🎓 Admission:</b><br>10th pass students SAMS Odisha portal ya college office se admission le sakte hain.",
-    "scholarship": "<b>💰 Scholarship:</b><br>Odisha ke students ke liye Post-Matric Scholarship aur Govt. schemes uplabdh hain.",
-    "developer": "<b>👨‍💻 Developer Credit:</b><br>Is AI Helpdesk ko <b>Sambit Kumar Manik</b> (1st Year, Diploma in AI & ML, Sai Vidyapeeth Puri) ne banaya hai!",
-    "sambit": "<b>Sambit Kumar Manik</b> Sai Vidyapeeth, Puri ke 1st Year AI & ML student hain.",
-    "hi": "Namaste! Bataiye main aapki kya madad karun?",
-    "hello": "Hello! College, Principal Sir, ya Address ke baare mein poochhein."
+    "principal": {
+      keywords: ["principal", "ପ୍ରିନ୍ସିପାଲ", "ଅଧ୍ୟକ୍ଷ", "head", "ashis"],
+      html: "<b>Respected Principal Sir:</b><br>Hamare Sai Vidyapeeth ke Principal Sir ka naam <b>Er. Ashis Kumar Dash</b> (M.Tech in CSE) hai.",
+      voice: "ଆମ ସାଇ ବିଦ୍ୟାପୀଠ କଲେଜର ପ୍ରିନ୍ସିପାଲ ସାର୍ ଙ୍କ ନାମ ଇଞ୍ଜିନିୟର ଆଶିଷ କୁମାର ଦାଶ ଅଟେ।"
+    },
+    "fees": {
+      keywords: ["fee", "fees", "hostel", "ଫିସ୍", "ହଷ୍ଟେଲ", "ଖର୍ଚ୍ଚ", "paisa", "amount"],
+      html: "<b>💰 Fee Structure (Non-Scholarship):</b><br>• <b>Course Fees:</b> ₹40,000<br>• <b>Hostel Fees:</b> ₹60,000<br><i>(Note: Yeh fees Non-Scholarship students ke liye hai. Scholarship students ke liye govt. rules laagu hote hain.)</i>",
+      voice: "ନନ୍ ସ୍କଲାରସିପ୍ ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ କୋର୍ସ ଫିସ୍ ୪୦ ହଜାର ଟଙ୍କା ଏବଂ ହଷ୍ଟେଲ ଫିସ୍ ୬୦ ହଜାର ଟଙ୍କା ଅଟେ।"
+    },
+    "address": {
+      keywords: ["address", "location", "ଠିକଣା", "କେଉଁଠି", "puri", "sakhigopal"],
+      html: "<b>📍 College Address:</b><br>Sai Vidyapeeth, At - Phula Alasa, PO - Mula Alasa, Via/PS - Satyabadi (near Sakhigopal), Dist. - Puri, Odisha - 752014.",
+      voice: "ସାଇ ବିଦ୍ୟାପୀଠ ପୁରୀ ଜିଲ୍ଲାର ସାକ୍ଷୀଗୋପାଳ ନିକଟସ୍ଥ ସତ୍ୟବାଦୀ ଫୁଲଅଳସା ଠାରେ ଅବସ୍ଥିତ।"
+    },
+    "name": {
+      keywords: ["name", "college", "କଲେଜ", "ନାମ", "vidyapeeth"],
+      html: "<b>🏫 College Name:</b><br>Hamare college ka naam <b>Sai Vidyapeeth</b> hai (AICTE Approved & SCTE&VT Odisha Affiliated).",
+      voice: "ଆମ କଲେଜର ନାମ ସାଇ ବିଦ୍ୟାପୀଠ ଅଟେ। ଏହା ଏ.ଆଇ.ସି.ଟି.ଇ ଦ୍ୱାରା ଅନୁମୋଦିତ।"
+    },
+    "branch": {
+      keywords: ["branch", "branches", "course", "ବ୍ରାଞ୍ଚ", "କୋର୍ସ", "ai", "mechanical", "electrical"],
+      html: "<b>📚 Available Branches:</b><br>1. AI & Machine Learning (AI & ML)<br>2. Electrical Engineering (EE)<br>3. Electrical & Electronics (EEE)<br>4. Mechanical Engineering (ME)",
+      voice: "ଆମ କଲେଜରେ ଏ.ଆଇ ଆଣ୍ଡ ମେସିନ୍ ଲର୍ଣ୍ଣିଂ, ଇଲେକ୍ଟ୍ରିକାଲ୍, ଇ.ଇ.ଇ ଏବଂ ମେକାନିକାଲ୍ ଡିପ୍ଲୋମା ବ୍ରାଞ୍ଚ ରହିଛି।"
+    },
+    "timing": {
+      keywords: ["timing", "time", "ସମୟ", "କେତେବେଳେ"],
+      html: "<b>⏰ College Timing:</b><br>Monday to Saturday, subah <b>9:00 AM se shaam 4:00 PM</b> tak.",
+      voice: "କଲେଜ ସମୟ ସୋମବାର ଠାରୁ ଶନିବାର ସକାଳ ୯ଟାରୁ ଅପରାହ୍ନ ୪ଟା ପର୍ଯ୍ୟନ୍ତ ଅଟେ।"
+    },
+    "contact": {
+      keywords: ["contact", "phone", "number", "ନମ୍ବର", "ଫୋନ"],
+      html: "<b>📞 Contact Details:</b><br>Phone: +91 94384 77565 / 06752-273238<br>Website: ://saividyapeeth.com",
+      voice: "କଲେଜ ଅଫିସ ସହ ଯୋଗାଯୋଗ କରିବା ପାଇଁ ୯୪୩୮୪ ୭୭୫୬୫ ନମ୍ବରରେ କଲ୍ କରନ୍ତୁ।"
+    },
+    "scholarship": {
+      keywords: ["scholarship", "ସ୍କଲାରସିପ", "ବୃତ୍ତି"],
+      html: "<b>🎓 Scholarship:</b><br>Odisha ke students ke liye Post-Matric Scholarship aur Govt. schemes uplabdh hain.",
+      voice: "ଓଡ଼ିଶା ସରକାରଙ୍କ ପୋଷ୍ଟ ମାଟ୍ରିକ୍ ସ୍କଲାରସିପ୍ ସୁବିଧା ଆମ କଲେଜରେ ଉପଲବ୍ଧ ଅଛି।"
+    },
+    "developer": {
+      keywords: ["developer", "sambit", "purnachandra", "କିଏ", "ବନାଇଛି", "creator"],
+      html: "<b>👨‍💻 Developer Credit:</b><br>Is AI Helpdesk ko <b>Sambit Kumar Manik</b> (1st Year, Diploma in AI & ML, Sai Vidyapeeth Puri) ne banaya hai!",
+      voice: "ଏହି ଏ.ଆଇ ହେଲ୍ପଡେସ୍କକୁ ସାଇ ବିଦ୍ୟାପୀଠ ପ୍ରଥମ ବର୍ଷର ଏ.ଆଇ ଛାତ୍ର ସମ୍ବିତ କୁମାର ମାଣିକ ପ୍ରସ୍ତୁତ କରିଛନ୍ତି।"
+    },
+    "greeting": {
+      keywords: ["hi", "hello", "namaskar", "ନମସ୍କାର", "ହେଲୋ"],
+      html: "Namaste! Bataiye main aapki kya madad karun?",
+      voice: "ନମସ୍କାର! ସାଇ ବିଦ୍ୟାପୀଠକୁ ସ୍ୱାଗତ। ମୁଁ ଆପଣଙ୍କୁ କିପରି ସାହାଯ୍ୟ କରିପାରିବି?"
+    }
   };
 
   function addMsg(text, who) {
@@ -86,29 +148,12 @@
   function findAnswer(q) {
     q = q.toLowerCase();
     for (var k in data) {
-      if (q.indexOf(k) !== -1) {
-        return data[k];
+      var list = data[k].keywords;
+      for (var i = 0; i < list.length; i++) {
+        if (q.indexOf(list[i]) !== -1) {
+          return data[k];
+        }
       }
     }
-    return "Dhanyawad! Adhik jankari ke liye <b>Sai Vidyapeeth, Puri</b> office (+91 94384 77565) me sampark karein.";
-  }
-
-  function sendNow() {
-    var inp = document.getElementById("userText");
-    var val = inp.value.trim();
-    if (val === "") return;
-    addMsg(val, "user");
-    inp.value = "";
-    var ans = findAnswer(val);
-    setTimeout(function() { addMsg(ans, "bot"); }, 300);
-  }
-
-  function replyNow(topic) {
-    addMsg(topic, "user");
-    var ans = findAnswer(topic);
-    setTimeout(function() { addMsg(ans, "bot"); }, 300);
-  }
-</script>
-
-</body>
-</html>
+    return {
+      html: "Dhanyawad! Adhik jankari ke liye <b>Sai Vidyapeeth, Puri</b> office (+91 94384 77565) me sampark karein.",
