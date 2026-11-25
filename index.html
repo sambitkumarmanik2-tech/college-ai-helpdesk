@@ -54,7 +54,7 @@
 
   <div class="inp">
     <input type="text" id="msgInput" placeholder="Apna sawal likhein...">
-    <button type="button" id="sendBtn" onclick="sendText()">Send</button>
+    <button type="button" onclick="sendText()">Send</button>
   </div>
 
   <div class="foot">Designed & Developed by <span>Sambit Kumar Manik</span> | Dept. of AI & ML</div>
@@ -169,5 +169,5 @@
     rec.start();
     document.getElementById("callStatus").innerText = "Listening... Ebe kuhantu";
     rec.onresult = function(ev) {
-      var said = ev.results.transcript;
+      var said = ev.results[0][0].transcript;
       document.getElementById("voiceText").innerText = "Apana: " + said;
